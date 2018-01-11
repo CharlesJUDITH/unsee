@@ -1,48 +1,59 @@
 go_import_path: github.com/cloudflare/unsee
-
 jobs:
   include:
-    - stage: Test Go code
-      language: go
-      go:  "1.9.2"
-      before_script:
-        - make mock-assets
-      cache:
-        directories:
-          - vendor
-      script: make test-go
-
-    - stage: Test JavaScript code
-      language: node_js
-      node_js: "8"
-      env:
-        - NODE_ENV=test
-      cache:
-        directories:
-          - node_modules
-      # install defaults to "npm install", which is done via make
-      install: []
-      script: make test-js
-
-    - stage: Lint Go code
-      language: go
-      go:  "1.9.2"
-      script: make lint-go
-
-    - stage: Lint JavaScript code
-      language: node_js
-      node_js: "8"
-      cache:
-        directories:
-          - node_modules
-      # install defaults to "npm install", which is done via make
-      install: []
-      script: make lint-js
-
-    - stage: Build Docker image
-      sudo: true
-      addons:
-        apt:
-          packages:
-            - docker-ce
-      script: make docker-image
+  - stage: Test Go code
+    language: go
+    go: 1.9.2
+    before_script:
+    - make mock-assets
+    cache:
+      directories:
+      - vendor
+    script: make test-go
+  - stage: Test JavaScript code
+    language: node_js
+    node_js: '8'
+    env:
+    - NODE_ENV=test
+    cache:
+      directories:
+      - node_modules
+    install: []
+    script: make test-js
+  - stage: Lint Go code
+    language: go
+    go: 1.9.2
+    script: make lint-go
+  - stage: Lint JavaScript code
+    language: node_js
+    node_js: '8'
+    cache:
+      directories:
+      - node_modules
+    install: []
+    script: make lint-js
+  - stage: Build Docker image
+    sudo: true
+    addons:
+      apt:
+        packages:
+        - docker-ce
+    script: make docker-image
+  - stage: Build binaries
+    sudo: true
+    language: go
+    go: 1.9.2
+    script:
+    - make promu
+    - promu crossbuild
+    - promu crossbuild tarballs
+    - promu checksum .tarballs
+    deploy:
+      provider: releases
+      api_key:
+        secure: pEhhbO6O3+oqx+fwphdYlmApNVmcDIaeVhu18Yj+tn6uzXIOSuTSpzp89e+4RtVn4auxIl2oGW0EucY7cUIWuBmjWPLYJcxIGH2jiGxoy5XUAFxyBAOt6ct2scOenJ2h4AIbUEeLwDrnbZ2gaG9sluQ6ESWebwpbWoZQi59Gv0SI9bOgAqt3CHeOQvXH8yUmaj4JmpG4mrr1YmiB4m6xKP5AciIWed0gFVRzNiqO8QYEG5Bth+2ZeAWhLwZstkRIF73aeFbWdN/+P+HXIe+Zm6HBuK3PoDiTik2h4QW8ZJ+5TG5XXd+Hen8b5cL3LZiV2pRI0UOxOwWtAkKzhZE+knv/o/QzO+HklMPr6BeBPlwG7twNSR2rBUD9zlynQuEj2uoamId+mBaC7u3cw8OGbBeHG0w1U7wfxzxnO4GkbsWk+seTUvUAJtA0+0ADLB9YEegF3l9fX3+7QwPGGQ8mK9fXB9qIkOuFXPtkbGVmAjuRI6FFIfEY5fTxRZBHxbj29sCimksqzdpm5DbnFgfiMUtZiY3yIxOEOQI4Jr4NYfzk2a6izGZdRi2LXqcV6yxqu0EWwN7BAV0KBaG0Yt4+0y3HOvnboaU2iN/pDrzIk2vz1/v7dYYaNEG5nkPGsZ/5TWwUsCsLMIA531b3+cr1xyuvHU0XRnwrraYZTpLeiWk=
+      file_glob: true
+      file: ".tarballs/*"
+      skip_cleanup: true
+      on: 
+    tags: true

@@ -1,6 +1,6 @@
 NAME    := unsee
 VERSION := $(shell git describe --tags --always --dirty='-dev')
-GO      := GO15VENDOREXPERIMENT=1 go
+GO      := GO18VENDOREXPERIMENT=1 go
 PROMU   := $(GOPATH)/bin/promu
 pkgs     = $(shell $(GO) list ./... | grep -v -E '/vendor/')
 
@@ -66,6 +66,18 @@ $(NAME): .build/deps-build-go.ok .build/vendor.ok bindata_assetfs.go $(SOURCES)
 	dep ensure
 	dep prune
 	touch $@
+
+test:
+	@echo ">> running short tests"
+	@$(GO) test -short $(pkgs)
+
+format:
+	@echo ">> formatting code"
+	@$(GO) fmt $(pkgs)
+
+vet:
+	@echo ">> vetting code"
+	@$(GO) vet $(pkgs)
 
 build: promu
 	@echo ">> building binaries"
