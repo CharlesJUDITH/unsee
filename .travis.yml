@@ -44,6 +44,7 @@ jobs:
     language: go
     go: 1.9.2
     script:
+    - make
     - make promu
     - promu crossbuild
     - promu crossbuild tarballs
