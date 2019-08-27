@@ -50,9 +50,9 @@ func (am *Alertmanager) detectVersion() string {
 	// if everything fails assume Alertmanager is at latest possible version
 	defaultVersion := "999.0.0"
 
-	url, err := transport.JoinURL(am.URI, "api/v1/status")
+	url, err := transport.JoinURL(am.URI, "api/v2/status")
 	if err != nil {
-		log.Errorf("Failed to join url '%s' and path 'api/v1/status': %s", am.URI, err)
+		log.Errorf("Failed to join url '%s' and path 'api/v2/status': %s", am.URI, err)
 		return defaultVersion
 	}
 	ver := alertmanagerVersion{}

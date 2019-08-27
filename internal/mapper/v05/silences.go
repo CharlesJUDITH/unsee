@@ -51,7 +51,7 @@ func (m SilenceMapper) GetSilences(uri string, timeout time.Duration) ([]models.
 	silences := []models.Silence{}
 	resp := silenceAPISchema{}
 
-	url, err := transport.JoinURL(uri, "api/v1/silences")
+	url, err := transport.JoinURL(uri, "api/2/silences")
 	if err != nil {
 		return silences, err
 	}

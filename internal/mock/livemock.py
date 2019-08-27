@@ -3,7 +3,7 @@
 import time
 import requests
 
-requests.post('http://localhost:9093/api/v1/silences',
+requests.post('http://localhost:9093/api/v2/silences',
     json={
       "matchers": [
         {
@@ -18,7 +18,7 @@ requests.post('http://localhost:9093/api/v1/silences',
       "comment": "Silenced instance"
     })
 
-requests.post('http://localhost:9093/api/v1/silences',
+requests.post('http://localhost:9093/api/v2/silences',
     json={
       "matchers": [
         {
@@ -38,7 +38,7 @@ requests.post('http://localhost:9093/api/v1/silences',
       "comment": "Silenced Host_Down alerts in the dev cluster"
     })
 
-requests.post('http://localhost:9093/api/v1/silences',
+requests.post('http://localhost:9093/api/v2/silences',
     json={
       "matchers": [
         {
@@ -54,7 +54,7 @@ requests.post('http://localhost:9093/api/v1/silences',
     })
 
 for i in xrange(0, 5):
-    requests.post('http://localhost:9093/api/v1/alerts',
+    requests.post('http://localhost:9093/api/v2/alerts',
         json=[{
             "labels": {
                 "alertname": "HTTP_Probe_Failed",

@@ -15,11 +15,11 @@ VERSIONS := 0.4.0 0.4.1 0.4.2 0.5.0 0.5.1 0.6.0 0.6.2 0.7.0 0.7.1 0.8.0 0.9.0 0.
 	@sleep 15
 	@echo "Sending mock alerts and silences"
 	@python livemock.py
-	@mkdir -p $(CURDIR)/$(VERSION)/api/v1 $(CURDIR)/$(VERSION)/api/v1/alerts
+	@mkdir -p $(CURDIR)/$(VERSION)/api/v2 $(CURDIR)/$(VERSION)/api/v2/alerts
 	@echo "Collecting API responses"
-	@curl --fail -s localhost:9093/api/v1/status | python -m json.tool > $(CURDIR)/$(VERSION)/api/v1/status
-	@curl --fail -s localhost:9093/api/v1/silences | python -m json.tool > $(CURDIR)/$(VERSION)/api/v1/silences
-	@curl --fail -s localhost:9093/api/v1/alerts/groups | python -m json.tool > $(CURDIR)/$(VERSION)/api/v1/alerts/groups
+	@curl --fail -s localhost:9093/api/v2/status | python -m json.tool > $(CURDIR)/$(VERSION)/api/v2/status
+	@curl --fail -s localhost:9093/api/v2/silences | python -m json.tool > $(CURDIR)/$(VERSION)/api/v2/silences
+	@curl --fail -s localhost:9093/api/v2/alerts/groups | python -m json.tool > $(CURDIR)/$(VERSION)/api/v2/alerts/groups
 	@touch $(VERSION)/.ok
 	@echo "Done"
 

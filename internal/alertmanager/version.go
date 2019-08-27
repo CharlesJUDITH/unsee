@@ -8,7 +8,7 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-// AlertmanagerVersion is what api/v1/status returns, we only use it to check
+// AlertmanagerVersion is what api/v2/status returns, we only use it to check
 // version, so we skip all other keys (except for status)
 type alertmanagerVersion struct {
 	Status string `json:"status"`
@@ -24,9 +24,9 @@ func GetVersion(uri string, timeout time.Duration) string {
 	// if everything fails assume Alertmanager is at latest possible version
 	defaultVersion := "999.0.0"
 
-	url, err := transport.JoinURL(uri, "api/v1/status")
+	url, err := transport.JoinURL(uri, "api/v2/status")
 	if err != nil {
-		log.Errorf("Failed to join url '%s' and path 'api/v1/status': %s", uri, err.Error())
+		log.Errorf("Failed to join url '%s' and path 'api/v2/status': %s", uri, err.Error())
 		return defaultVersion
 	}
 	ver := alertmanagerVersion{}

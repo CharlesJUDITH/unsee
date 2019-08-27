@@ -66,7 +66,7 @@ func (m AlertMapper) GetAlerts(uri string, timeout time.Duration) ([]models.Aler
 	receivers := map[string]alertsGroupReceiver{}
 	resp := alertsGroupsAPISchema{}
 
-	url, err := transport.JoinURL(uri, "api/v1/alerts/groups")
+	url, err := transport.JoinURL(uri, "api/v2/alerts/groups")
 	if err != nil {
 		return groups, err
 	}

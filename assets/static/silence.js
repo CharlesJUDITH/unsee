@@ -10,7 +10,7 @@ const ui = require("./ui");
 const unsee = require("./unsee");
 
 function alertmanagerSilencesAPIUrl(prefix) {
-    return prefix + "/api/v1/silences";
+    return prefix + "/api/v2/silences";
 }
 
 function silenceFormData() {

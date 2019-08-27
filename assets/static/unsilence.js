@@ -50,7 +50,7 @@ function markSuccess(alertmanagerURI, silenceID) {
 function deleteSilence(alertmanagerURI, silenceID) {
     $.ajax({
         type: "DELETE",
-        url: alertmanagerURI + "/api/v1/silence/" + silenceID,
+        url: alertmanagerURI + "/api/2/silence/" + silenceID,
         error: function(xhr) {
             markFailed(alertmanagerURI, silenceID, xhr);
         },

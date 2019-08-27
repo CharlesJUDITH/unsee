@@ -15,12 +15,12 @@ import (
 	"github.com/cloudflare/unsee/internal/mock"
 	"github.com/cloudflare/unsee/internal/models"
 	"github.com/cloudflare/unsee/internal/slices"
+	httpmock "gopkg.in/jarcoal/httpmock.v1"
 
 	cache "github.com/patrickmn/go-cache"
 	log "github.com/sirupsen/logrus"
 
 	"github.com/gin-gonic/gin"
-	"gopkg.in/jarcoal/httpmock.v1"
 )
 
 var upstreamSetup = false
@@ -107,9 +107,9 @@ func mockAlerts(version string) {
 
 	apiCache = cache.New(cache.NoExpiration, 10*time.Second)
 
-	mock.RegisterURL("http://localhost/api/v1/status", version, "status")
-	mock.RegisterURL("http://localhost/api/v1/silences", version, "silences")
-	mock.RegisterURL("http://localhost/api/v1/alerts/groups", version, "alerts/groups")
+	mock.RegisterURL("http://localhost/api/v2/status", version, "status")
+	mock.RegisterURL("http://localhost/api/v2/silences", version, "silences")
+	mock.RegisterURL("http://localhost/api/v2/alerts/groups", version, "alerts/groups")
 
 	pullFromAlertmanager()
 }
